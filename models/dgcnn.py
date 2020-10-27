@@ -112,9 +112,8 @@ def get_model(point_cloud, is_training, x_z, x_y, x_x, bn_decay=None):
                        scope='attention_1', bn_decay=bn_decay)
 #---------------------Embedding Attention Fusion--------------------------------------#                                   
   edge_feature_att = tf.add(net, tf.multiply(net, concat_feature2))
-  edge_feature_att = tf.reduce_max(edge_feature_att, axis=-2, keep_dims=True)
-  
-  adj_matrix = tf_util.pairwise_distance(net)
+
+  adj_matrix = tf_util.pairwise_distance(edge_feature_att)
   nn_idx = tf_util.knn(adj_matrix, k=k)
   edge_feature = tf_util.get_edge_feature(net, nn_idx=nn_idx, k=k) 
   
@@ -138,7 +137,7 @@ def get_model(point_cloud, is_training, x_z, x_y, x_x, bn_decay=None):
   net = tf.reduce_max(net, axis=-2, keep_dims=True)
   net4 = net
   print('this is the shape of net4', (net4).shape)
-  net = tf_util.conv2d(tf.concat([net1, net2, net3, net4,rnn_feat_expand,edge_feature_att], axis=-1), 1024, [1, 1], 
+  net = tf_util.conv2d(tf.concat([net1, net2, net3, net4,rnn_feat_expand], axis=-1), 1024, [1, 1], 
                        padding='VALID', stride=[1,1],
                        bn=True, is_training=is_training,
                        scope='agg', bn_decay=bn_decay)

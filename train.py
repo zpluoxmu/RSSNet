@@ -18,7 +18,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--gpu', type=int, default=0, help='GPU to use [default: GPU 0]')
 parser.add_argument('--model', default='dgcnn', help='Model name: dgcnn')
 parser.add_argument('--log_dir', default='log', help='Log dir [default: log]')
-parser.add_argument('--num_point', type=int, default=512, help='Point Number [256/512/1024/2048] [default: 1024]')
+parser.add_argument('--num_point', type=int, default=128, help='Point Number [256/512/1024/2048] [default: 1024]')
 parser.add_argument('--max_epoch', type=int, default=50, help='Epoch to run [default: 250]')
 parser.add_argument('--batch_size', type=int, default=8, help='Batch Size during training [default: 32]')
 parser.add_argument('--learning_rate', type=float, default=0.0006, help='Initial learning rate [default: 0.001]')
@@ -48,7 +48,7 @@ os.system('cp train.py %s' % (LOG_DIR)) # bkp of train procedure
 LOG_FOUT = open(os.path.join(LOG_DIR, 'log_train.txt'), 'w')
 LOG_FOUT.write(str(FLAGS)+'\n')
 
-MAX_NUM_POINT = 512
+MAX_NUM_POINT = 128
 NUM_CLASSES = 3
 
 BN_INIT_DECAY = 0.5
